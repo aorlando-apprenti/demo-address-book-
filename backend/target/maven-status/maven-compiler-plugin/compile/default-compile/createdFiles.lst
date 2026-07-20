@@ -1,0 +1,14 @@
+com\apprenticareers\addressbook\domain\Contact.class
+com\apprenticareers\addressbook\service\ContactService.class
+com\apprenticareers\addressbook\service\AdminUserService.class
+com\apprenticareers\addressbook\repository\ContactRepository.class
+com\apprenticareers\addressbook\domain\User$Role.class
+com\apprenticareers\addressbook\controller\AdminUserController.class
+com\apprenticareers\addressbook\controller\AccountController.class
+com\apprenticareers\addressbook\AddressBookApplication.class
+com\apprenticareers\addressbook\controller\AuthController.class
+com\apprenticareers\addressbook\domain\User.class
+com\apprenticareers\addressbook\controller\ContactController.class
+com\apprenticareers\addressbook\service\StartupAdminSeederService.class
+com\apprenticareers\addressbook\repository\UserRepository.class
+com\apprenticareers\addressbook\service\AuthService.class
