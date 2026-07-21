@@ -10,4 +10,4 @@ export default defineConfig({
     globals: false,
     css: true,
   },
-})
+} as any)
