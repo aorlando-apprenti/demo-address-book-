@@ -1,5 +1,6 @@
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\security\JwtAuthenticationFilter.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\domain\Contact.java
+C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\ContactRequest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\CreateUserResponse.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\security\PasswordGenerator.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\ResetPasswordResponse.java
@@ -11,6 +12,7 @@ C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\a
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\service\AdminUserService.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\domain\User.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\exception\GlobalExceptionHandler.java
+C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\exception\ContactNotFoundException.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\RegisterRequest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\ChangePasswordRequest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\repository\ContactRepository.java
@@ -22,6 +24,7 @@ C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\a
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\service\AuthService.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\exception\UserNotFoundException.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\controller\AuthController.java
+C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\ContactResponse.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\UserResponse.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\dto\ErrorResponse.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\main\java\com\apprenticareers\addressbook\exception\EmailAlreadyExistsException.java

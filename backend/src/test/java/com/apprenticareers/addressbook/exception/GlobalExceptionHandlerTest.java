@@ -56,6 +56,15 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
+    void handleContactNotFound_returns404WithoutDisclosingId() {
+        ResponseEntity<ErrorResponse> response = handler.handleContactNotFound(new ContactNotFoundException(99L));
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(response.getBody().getMessage()).isEqualTo("Resource not found");
+        assertThat(response.getBody().getMessage()).doesNotContain("99");
+    }
+
+    @Test
     void handleAccessDenied_returns403() {
         ResponseEntity<ErrorResponse> response =
                 handler.handleAccessDenied(new AccessDeniedException("denied"));

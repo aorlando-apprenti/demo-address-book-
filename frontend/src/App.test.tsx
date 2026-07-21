@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { cleanup, render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import App from './App';
-import { authApi } from './api/client';
+import { authApi, contactsApi } from './api/client';
 
 vi.mock('./api/client', async () => {
   const actual = await vi.importActual<typeof import('./api/client')>('./api/client');
@@ -9,6 +9,13 @@ vi.mock('./api/client', async () => {
     ...actual,
     authApi: { register: vi.fn(), login: vi.fn(), changePassword: vi.fn() },
     adminApi: { createUser: vi.fn(), removeUser: vi.fn(), resetPassword: vi.fn() },
+    contactsApi: {
+      list: vi.fn().mockResolvedValue([]),
+      search: vi.fn().mockResolvedValue([]),
+      create: vi.fn(),
+      update: vi.fn(),
+      remove: vi.fn(),
+    },
   };
 });
 
@@ -31,6 +38,7 @@ async function logIn(email: string, role: string) {
 describe('App', () => {
   beforeEach(() => {
     localStorage.clear();
+    (contactsApi.list as ReturnType<typeof vi.fn>).mockResolvedValue([]);
   });
 
   afterEach(() => {
@@ -67,6 +75,15 @@ describe('App', () => {
     await logIn('admin@example.com', 'ADMIN');
 
     expect(screen.getByRole('heading', { name: 'Admin: User Management' })).toBeInTheDocument();
+  });
+
+  it('shows the contacts panel for any authenticated role', async () => {
+    render(<App />);
+
+    await logIn('user@example.com', 'USER');
+
+    expect(screen.getByRole('heading', { name: 'My Contacts' })).toBeInTheDocument();
+    expect(contactsApi.list).toHaveBeenCalledWith('tok');
   });
 
   it('logs out and returns to the login form', async () => {

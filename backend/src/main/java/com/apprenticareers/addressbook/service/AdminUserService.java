@@ -7,6 +7,7 @@ import com.apprenticareers.addressbook.dto.ResetPasswordResponse;
 import com.apprenticareers.addressbook.dto.UserResponse;
 import com.apprenticareers.addressbook.exception.EmailAlreadyExistsException;
 import com.apprenticareers.addressbook.exception.UserNotFoundException;
+import com.apprenticareers.addressbook.repository.ContactRepository;
 import com.apprenticareers.addressbook.repository.UserRepository;
 import com.apprenticareers.addressbook.security.PasswordGenerator;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class AdminUserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ContactRepository contactRepository;
 
     /**
      * FR-04: Admin adds a new user account. Always provisioned with role USER
@@ -48,12 +50,16 @@ public class AdminUserService {
     }
 
     /**
-     * FR-05: Admin removes an existing user account.
+     * FR-05: Admin removes an existing user account. Cascades to delete the
+     * user's owned {@code Contact} rows first (Architecture §3), since
+     * {@code Contact.ownerUserId} is a plain FK column rather than a JPA
+     * association with entity-level cascade.
      */
     @PreAuthorize("hasRole('ADMIN')")
     public void removeUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
+        contactRepository.deleteByOwnerUserId(user.getId());
         userRepository.delete(user);
     }
 

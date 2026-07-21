@@ -32,6 +32,18 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Resource not found"));
     }
 
+    /**
+     * FR-11: never disclose the requested contact ID in the response body —
+     * this must be indistinguishable from "not found" whether the contact
+     * genuinely does not exist or belongs to another user (no cross-user
+     * existence leakage), mirroring the {@code UserNotFoundException} fix.
+     */
+    @ExceptionHandler(ContactNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleContactNotFound(ContactNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Resource not found"));
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)

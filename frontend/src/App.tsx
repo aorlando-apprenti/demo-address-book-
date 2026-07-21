@@ -5,6 +5,7 @@ import { LoginForm } from './components/LoginForm';
 import { RegisterForm } from './components/RegisterForm';
 import { ChangePasswordForm } from './components/ChangePasswordForm';
 import { AdminUserManagement } from './components/AdminUserManagement';
+import { ContactManagement } from './components/ContactManagement';
 
 function AuthenticatedView() {
   const { auth, logout } = useAuth();
@@ -24,6 +25,7 @@ function AuthenticatedView() {
         </button>
       </header>
       <ChangePasswordForm token={auth.token} />
+      <ContactManagement token={auth.token} />
       {auth.role === 'ADMIN' && <AdminUserManagement token={auth.token} />}
     </div>
   );

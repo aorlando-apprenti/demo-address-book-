@@ -6,11 +6,13 @@ import com.apprenticareers.addressbook.dto.CreateUserResponse;
 import com.apprenticareers.addressbook.dto.ResetPasswordResponse;
 import com.apprenticareers.addressbook.exception.EmailAlreadyExistsException;
 import com.apprenticareers.addressbook.exception.UserNotFoundException;
+import com.apprenticareers.addressbook.repository.ContactRepository;
 import com.apprenticareers.addressbook.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,6 +34,9 @@ class AdminUserServiceTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private ContactRepository contactRepository;
 
     @InjectMocks
     private AdminUserService adminUserService;
@@ -89,11 +94,23 @@ class AdminUserServiceTest {
     }
 
     @Test
+    void removeUser_cascadesToDeleteOwnedContactsBeforeDeletingUser() {
+        when(userRepository.findById(5L)).thenReturn(Optional.of(targetUser));
+
+        adminUserService.removeUser(5L);
+
+        InOrder inOrder = inOrder(contactRepository, userRepository);
+        inOrder.verify(contactRepository).deleteByOwnerUserId(5L);
+        inOrder.verify(userRepository).delete(targetUser);
+    }
+
+    @Test
     void removeUser_throwsWhenUserNotFound() {
         when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> adminUserService.removeUser(999L));
         verify(userRepository, never()).delete(any());
+        verify(contactRepository, never()).deleteByOwnerUserId(any());
     }
 
     @Test

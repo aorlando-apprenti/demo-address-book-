@@ -1,11 +1,14 @@
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\security\CustomUserDetailsServiceTest.java
+C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\controller\ContactControllerTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\security\JwtAuthenticationFilterTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\security\UserPrincipalTest.java
+C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\service\ContactServiceTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\service\StartupAdminSeederServiceTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\AddressBookApplicationTests.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\exception\GlobalExceptionHandlerTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\repository\UserRepositoryTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\service\AuthServiceTest.java
+C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\repository\ContactRepositoryTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\security\PasswordGeneratorTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\controller\AccountControllerTest.java
 C:\Users\Anthony Orlando\workspace\demo-address-book\backend\src\test\java\com\apprenticareers\addressbook\controller\AuthControllerTest.java

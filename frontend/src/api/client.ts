@@ -54,6 +54,23 @@ export interface MessageResponse {
   message: string;
 }
 
+export interface ContactPayload {
+  name: string;
+  address: string;
+  telephoneNumber: string;
+  email: string;
+}
+
+export interface ContactResponse {
+  id: number;
+  name: string;
+  address: string;
+  telephoneNumber: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export class ApiRequestError extends Error {
   status: number;
   fieldErrors?: Record<string, string>;
@@ -110,4 +127,21 @@ export const adminApi = {
 
   resetPassword: (id: number, token: string): Promise<ResetPasswordResponse> =>
     request<ResetPasswordResponse>(`/admin/users/${id}/reset-password`, { method: 'POST' }, token),
+};
+
+export const contactsApi = {
+  list: (token: string): Promise<ContactResponse[]> =>
+    request<ContactResponse[]>('/contacts', { method: 'GET' }, token),
+
+  search: (query: string, token: string): Promise<ContactResponse[]> =>
+    request<ContactResponse[]>(`/contacts/search?query=${encodeURIComponent(query)}`, { method: 'GET' }, token),
+
+  create: (payload: ContactPayload, token: string): Promise<ContactResponse> =>
+    request<ContactResponse>('/contacts', { method: 'POST', body: JSON.stringify(payload) }, token),
+
+  update: (id: number, payload: ContactPayload, token: string): Promise<ContactResponse> =>
+    request<ContactResponse>(`/contacts/${id}`, { method: 'PUT', body: JSON.stringify(payload) }, token),
+
+  remove: (id: number, token: string): Promise<MessageResponse> =>
+    request<MessageResponse>(`/contacts/${id}`, { method: 'DELETE' }, token),
 };

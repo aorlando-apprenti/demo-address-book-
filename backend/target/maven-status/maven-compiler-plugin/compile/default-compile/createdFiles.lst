@@ -1,6 +1,7 @@
 com\apprenticareers\addressbook\security\JwtAuthenticationFilter.class
 com\apprenticareers\addressbook\dto\CreateUserRequest.class
 com\apprenticareers\addressbook\dto\ChangePasswordRequest.class
+com\apprenticareers\addressbook\dto\ContactRequest.class
 com\apprenticareers\addressbook\dto\CreateUserResponse.class
 com\apprenticareers\addressbook\dto\MessageResponse.class
 com\apprenticareers\addressbook\service\ContactService.class
@@ -13,6 +14,7 @@ com\apprenticareers\addressbook\AddressBookApplication.class
 com\apprenticareers\addressbook\domain\User.class
 com\apprenticareers\addressbook\security\JwtService.class
 com\apprenticareers\addressbook\exception\EmailAlreadyExistsException.class
+com\apprenticareers\addressbook\dto\ContactResponse.class
 com\apprenticareers\addressbook\exception\InvalidCredentialsException.class
 com\apprenticareers\addressbook\domain\Contact.class
 com\apprenticareers\addressbook\service\AdminUserService.class
@@ -21,6 +23,7 @@ com\apprenticareers\addressbook\dto\UserResponse.class
 com\apprenticareers\addressbook\dto\LoginRequest.class
 com\apprenticareers\addressbook\domain\User$Role.class
 com\apprenticareers\addressbook\dto\AuthResponse.class
+com\apprenticareers\addressbook\exception\ContactNotFoundException.class
 com\apprenticareers\addressbook\exception\UserNotFoundException.class
 com\apprenticareers\addressbook\controller\AccountController.class
 com\apprenticareers\addressbook\dto\ResetPasswordResponse.class
