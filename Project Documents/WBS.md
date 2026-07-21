@@ -42,8 +42,12 @@ Branch: `iteration-2-contacts`
 | TSK-1.8 | `COMPLETE` — `@code-reviewer` found 2 blocking issues (user-ID disclosure via `UserNotFoundException`, missing CORS config), both remediated in commit `126506b` and re-reviewed: `[APPROVED FOR PRODUCTION]` |
 | TSK-1.9 | `COMPLETE` — `iteration-1-security` merged (fast-forward) and pushed to `main`; full regression suite green (65 backend + 27 frontend tests); app deployed locally as Test Environment (`:8080`/`:5173`) |
 | TSK-1.10 | `COMPLETE` — `@qa-tester` E2E pass on FR-01–FR-06 via live HTTP calls: 100% pass, 0 Critical/Major defects. One Minor non-gating defect logged (`DEF-1-01`, unused `GET /admin/users` returns 500) — see `Project Documents/DEFECTS.md` |
-| TSK-1.11 | `COMPLETE` — production build for backend (`addressbook-1.0.0-SNAPSHOT.jar`) and frontend (`frontend/dist/`) succeeded; tagged `milestone-1-v1.0.0` locally (not yet pushed) |
-| TSK-2.1 – TSK-2.10 | `NOT STARTED` — Milestone 1 shipped; Iteration 2 (Contact Management) can now begin |
+| TSK-1.11 | `COMPLETE` — production build for backend (`addressbook-1.0.0-SNAPSHOT.jar`) and frontend (`frontend/dist/`) succeeded; tagged `milestone-1-v1.0.0`, pushed to `origin` |
+| TSK-2.1 – TSK-2.6 | `COMPLETE` — `@software-developer` implemented Contact entity/schema, `ContactRepository` (multi-field search), `ContactService` (CRUD, strict ownerUserId scoping, cascade-delete-on-user-removal), `ContactController`, and matching React/TS contacts UI, with unit tests at every layer (93 backend + 43 frontend tests) |
+| TSK-2.7 | `COMPLETE` — `@code-reviewer` found zero issues on first pass: `[APPROVED FOR PRODUCTION]`. Verified strict per-user contact scoping with no Admin override, principal-derived ownership only, composite-key lookups, correct cascade ordering, no ID disclosure |
+| TSK-2.8 | `COMPLETE` — `iteration-2-contacts` merged (fast-forward) into `main`; full regression suite green (93 backend + 43 frontend tests); Test Environment redeployed locally (`:8080`/`:5173`) |
+| TSK-2.9 | `COMPLETE` — `@qa-tester` E2E pass on FR-07–FR-11 via live HTTP calls: 100% pass, 0 Critical/Major defects, including the critical cross-user isolation and Admin-has-no-special-access checks. One Minor non-gating defect logged (`DEF-2-01`, unused `GET /contacts/{id}` returns 500) — see `Project Documents/DEFECTS.md` |
+| TSK-2.10 | `COMPLETE` — production build for backend (`addressbook-1.0.0-SNAPSHOT.jar`) and frontend (`frontend/dist/`) succeeded; tagged `milestone-2-v1.0.0` locally (not yet pushed) |
 
 Scaffolding (`/pipeline-deploy` Workflow A) is `COMPLETE`: project scaffolded at `C:\Users\Anthony Orlando\workspace\demo-address-book`, green build verified, commit `5e32bd0` pushed to `main` and `iteration-1-security` on GitHub.
 
