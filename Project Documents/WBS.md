@@ -39,8 +39,12 @@ Branch: `iteration-2-contacts`
 | Task ID | Status |
 | :--- | :--- |
 | TSK-1.1 – TSK-1.7 | `COMPLETE` — `@software-developer` implemented repositories, JWT/security infra, services, controllers, and React/TS frontend for Milestone 1, with unit tests at every layer |
-| TSK-1.8 | `IN PROGRESS` — quiet unit test verification, then `@code-reviewer` audit gate |
-| TSK-1.9 – TSK-1.11 | `NOT STARTED` — pending TSK-1.8 approval |
-| TSK-2.1 – TSK-2.10 | `NOT STARTED` — pending TSK-1.11 (Milestone 1 must ship before Milestone 2 begins, per Project Charter) |
+| TSK-1.8 | `COMPLETE` — `@code-reviewer` found 2 blocking issues (user-ID disclosure via `UserNotFoundException`, missing CORS config), both remediated in commit `126506b` and re-reviewed: `[APPROVED FOR PRODUCTION]` |
+| TSK-1.9 | `COMPLETE` — `iteration-1-security` merged (fast-forward) and pushed to `main`; full regression suite green (65 backend + 27 frontend tests); app deployed locally as Test Environment (`:8080`/`:5173`) |
+| TSK-1.10 | `COMPLETE` — `@qa-tester` E2E pass on FR-01–FR-06 via live HTTP calls: 100% pass, 0 Critical/Major defects. One Minor non-gating defect logged (`DEF-1-01`, unused `GET /admin/users` returns 500) — see `Project Documents/DEFECTS.md` |
+| TSK-1.11 | `COMPLETE` — production build for backend (`addressbook-1.0.0-SNAPSHOT.jar`) and frontend (`frontend/dist/`) succeeded; tagged `milestone-1-v1.0.0` locally (not yet pushed) |
+| TSK-2.1 – TSK-2.10 | `NOT STARTED` — Milestone 1 shipped; Iteration 2 (Contact Management) can now begin |
 
 Scaffolding (`/pipeline-deploy` Workflow A) is `COMPLETE`: project scaffolded at `C:\Users\Anthony Orlando\workspace\demo-address-book`, green build verified, commit `5e32bd0` pushed to `main` and `iteration-1-security` on GitHub.
+
+Milestone 1 (Iteration 1 — Foundation & Security) is `COMPLETE` as of commit `1559322` on `main`, tagged `milestone-1-v1.0.0`.
