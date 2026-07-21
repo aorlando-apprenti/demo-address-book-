@@ -36,4 +36,11 @@ Branch: `iteration-2-contacts`
 | TSK-2.10 | Production build & release — Milestone 2 | Pipeline Workflow C | TSK-2.9 PASSED | S | `@dev-ops` |
 
 ## Status Tracking
-All tasks: `NOT STARTED` pending WBS approval and `@dev-ops` scaffolding (`/pipeline-deploy` Workflow A).
+| Task ID | Status |
+| :--- | :--- |
+| TSK-1.1 – TSK-1.7 | `COMPLETE` — `@software-developer` implemented repositories, JWT/security infra, services, controllers, and React/TS frontend for Milestone 1, with unit tests at every layer |
+| TSK-1.8 | `IN PROGRESS` — quiet unit test verification, then `@code-reviewer` audit gate |
+| TSK-1.9 – TSK-1.11 | `NOT STARTED` — pending TSK-1.8 approval |
+| TSK-2.1 – TSK-2.10 | `NOT STARTED` — pending TSK-1.11 (Milestone 1 must ship before Milestone 2 begins, per Project Charter) |
+
+Scaffolding (`/pipeline-deploy` Workflow A) is `COMPLETE`: project scaffolded at `C:\Users\Anthony Orlando\workspace\demo-address-book`, green build verified, commit `5e32bd0` pushed to `main` and `iteration-1-security` on GitHub.

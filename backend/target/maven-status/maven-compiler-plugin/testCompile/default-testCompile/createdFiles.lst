@@ -1,0 +1,14 @@
+com\apprenticareers\addressbook\security\JwtAuthenticationFilterTest.class
+com\apprenticareers\addressbook\controller\AdminUserControllerTest.class
+com\apprenticareers\addressbook\security\CustomUserDetailsServiceTest.class
+com\apprenticareers\addressbook\AddressBookApplicationTests.class
+com\apprenticareers\addressbook\controller\AccountControllerTest.class
+com\apprenticareers\addressbook\service\AdminUserServiceTest.class
+com\apprenticareers\addressbook\security\PasswordGeneratorTest.class
+com\apprenticareers\addressbook\security\JwtServiceTest.class
+com\apprenticareers\addressbook\controller\AuthControllerTest.class
+com\apprenticareers\addressbook\service\AuthServiceTest.class
+com\apprenticareers\addressbook\exception\GlobalExceptionHandlerTest.class
+com\apprenticareers\addressbook\security\UserPrincipalTest.class
+com\apprenticareers\addressbook\repository\UserRepositoryTest.class
+com\apprenticareers\addressbook\service\StartupAdminSeederServiceTest.class
