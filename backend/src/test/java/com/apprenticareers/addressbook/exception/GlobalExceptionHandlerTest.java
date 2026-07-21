@@ -51,7 +51,8 @@ class GlobalExceptionHandlerTest {
         ResponseEntity<ErrorResponse> response = handler.handleUserNotFound(new UserNotFoundException(42L));
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(response.getBody().getMessage()).contains("42");
+        assertThat(response.getBody().getMessage()).isEqualTo("Resource not found");
+        assertThat(response.getBody().getMessage()).doesNotContain("42");
     }
 
     @Test
