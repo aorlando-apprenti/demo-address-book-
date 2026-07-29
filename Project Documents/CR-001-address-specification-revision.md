@@ -4,7 +4,7 @@
 *   **Requested By:** Anthony Orlando
 *   **Target Application:** demo-address-book
 *   **Priority:** Medium
-*   **Status:** Open
+*   **Status:** Implemented (release tag `cr-001-v1.1.0`, 2026-07-29)
 
 ## Problem / Motivation
 The address currently stored in the Address Book is a single free-text line. A proper address should be broken into structured components rather than one collapsed field.
