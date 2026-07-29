@@ -1,5 +1,11 @@
 # System Architecture: demo-address-book
 
+## Document Version History
+| Version | Date | CR ID | Change Description |
+| :--- | :--- | :--- | :--- |
+| v1.0 | 2026-07-20 | (original) | Initial approved architecture for demo-address-book |
+| v1.1 | 2026-07-29 | CR-001 | Expanded `User.address`/`Contact.address` into structured fields (`addressLine1`, `addressLine2`, `city`, `state`, `zipCode`); updated schema, search, and registration/contact sequencing accordingly |
+
 ## 1. Security and User Access
 
 *   **Authentication & Authorization Strategy:**
@@ -16,8 +22,8 @@
     - Enforced via method-level security (`@PreAuthorize`) checked against the authenticated principal's role and, for contacts, an explicit ownership check (`contact.ownerId == principal.id`) at the Service layer — never trusting a client-supplied user ID.
 
 ## 2. Core Business Entities
-*   **User:** `id`, `email` (unique, used as username), `passwordHash`, `address`, `telephoneNumber`, `role` (`USER` | `ADMIN`), `createdAt`.
-*   **Contact:** `id`, `ownerUserId` (FK → User.id), `name`, `address`, `telephoneNumber`, `email`, `createdAt`, `updatedAt`.
+*   **User:** `id`, `email` (unique, used as username), `passwordHash`, `addressLine1`, `addressLine2` (nullable), `city`, `state`, `zipCode`, `telephoneNumber`, `role` (`USER` | `ADMIN`), `createdAt`. *(CR-001: replaces the single `address` field with structured components — see Requirements.md §7.)*
+*   **Contact:** `id`, `ownerUserId` (FK → User.id), `name`, `addressLine1`, `addressLine2` (nullable), `city`, `state`, `zipCode`, `telephoneNumber`, `email`, `createdAt`, `updatedAt`. *(CR-001: same field expansion as `User`.)*
 
 ## 3. Data Persistence
 *   **Storage Paradigm:** Relational (H2, file-mode) for this test application — self-contained, no external DB dependency required to verify the pipeline. Swappable to PostgreSQL/MySQL for a real production deployment via Spring Data JPA without code changes (only `application.properties` datasource config changes).
@@ -26,15 +32,16 @@
     - `contacts.owner_user_id` — `NOT NULL` foreign key with an index (per-user contact scoping and search performance, FR-11).
     - `contacts` — composite/secondary indexes on `(owner_user_id, name)` to support multi-field search (FR-10) at reasonable performance for a test app.
     - Cascade rule: deleting a `User` (FR-05) cascades to delete their owned `Contact` rows.
+    - **CR-001 Schema Delta:** `users` and `contacts` each drop the single `address VARCHAR` column and add five columns: `address_line1 VARCHAR NOT NULL`, `address_line2 VARCHAR NULL`, `city VARCHAR NOT NULL`, `state CHAR(2) NOT NULL`, `zip_code VARCHAR(10) NOT NULL` (sized for ZIP+4's `#####-####`). This is a notable schema change, not a routine edit — called out explicitly per change-request convention. Since this app uses H2 with Hibernate-managed DDL (no fixed external DDL script) and holds no production data worth preserving, no migration script is required; the schema regenerates from the updated `@Entity` classes on next startup/reseed.
 
 ## 4. Services
 *   **AuthService:** Handles registration (hash + persist new `User`), login (credential verification, JWT issuance), and self-service password change.
 *   **AdminUserService:** Handles Admin-only user creation, user removal, and password-reset-generation for a target user. Enforces `ADMIN`-only access via `@PreAuthorize`.
-*   **ContactService:** Handles add/edit/delete/search of `Contact` records, always scoped to the authenticated user's `ownerUserId`; search queries filter across `name`, `address`, `telephoneNumber`, `email` (FR-10).
+*   **ContactService:** Handles add/edit/delete/search of `Contact` records, always scoped to the authenticated user's `ownerUserId`; search queries filter across `name`, `addressLine1`, `addressLine2`, `city`, `state`, `zipCode`, `telephoneNumber`, `email` (FR-10, updated per CR-001).
 *   **StartupAdminSeederService:** One-time bootstrap component that creates the initial Admin account if none exists (FR-02).
 
 ## 5. Sequencing of Operations
-1. **Registration:** Client → `POST /auth/register` (email, password, address, phone) → `AuthController` validates payload → `AuthService` checks email uniqueness → hashes password → `UserRepository` persists → returns confirmation.
+1. **Registration:** Client → `POST /auth/register` (email, password, addressLine1, addressLine2, city, state, zipCode, phone — updated per CR-001) → `AuthController` validates payload → `AuthService` checks email uniqueness → hashes password → `UserRepository` persists → returns confirmation.
 2. **Login:** Client → `POST /auth/login` (email, password) → `AuthController` → `AuthService` verifies hash via `PasswordEncoder` → issues JWT with embedded role claim → client stores token for subsequent requests.
 3. **Contact CRUD/Search:** Client → `POST/PUT/DELETE/GET /contacts/**` (with bearer token) → `ContactController` extracts authenticated user ID from the security context → `ContactService` enforces ownership → `ContactRepository` executes the query, always filtered by `ownerUserId`.
 4. **Admin Add/Remove User:** Admin client → `POST/DELETE /admin/users/**` → `AdminUserController` (requires `ADMIN` role) → `AdminUserService` → `UserRepository` creates/removes the target `User` row (cascades to their `Contact` rows on removal).
