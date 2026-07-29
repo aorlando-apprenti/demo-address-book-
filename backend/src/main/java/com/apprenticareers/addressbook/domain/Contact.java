@@ -36,7 +36,17 @@ public class Contact {
     @Column(nullable = false)
     private String name;
 
-    private String address;
+    private String addressLine1;
+
+    private String addressLine2;
+
+    private String city;
+
+    @Column(length = 2)
+    private String state;
+
+    @Column(length = 10)
+    private String zipCode;
 
     private String telephoneNumber;
 

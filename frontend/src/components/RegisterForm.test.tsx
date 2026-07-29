@@ -14,7 +14,10 @@ vi.mock('../api/client', async () => {
 function fillForm() {
   fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'a@b.com' } });
   fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'password1' } });
-  fireEvent.change(screen.getByLabelText('Address'), { target: { value: '1 Elm St' } });
+  fireEvent.change(screen.getByLabelText('Address Line 1'), { target: { value: '1 Elm St' } });
+  fireEvent.change(screen.getByLabelText('City'), { target: { value: 'Springfield' } });
+  fireEvent.change(screen.getByLabelText('State'), { target: { value: 'IL' } });
+  fireEvent.change(screen.getByLabelText('ZIP Code'), { target: { value: '62701' } });
   fireEvent.change(screen.getByLabelText('Telephone Number'), { target: { value: '555-0100' } });
 }
 
@@ -37,7 +40,11 @@ describe('RegisterForm', () => {
     expect(authApi.register).toHaveBeenCalledWith({
       email: 'a@b.com',
       password: 'password1',
-      address: '1 Elm St',
+      addressLine1: '1 Elm St',
+      addressLine2: '',
+      city: 'Springfield',
+      state: 'IL',
+      zipCode: '62701',
       telephoneNumber: '555-0100',
     });
     expect(onRegistered).toHaveBeenCalledTimes(1);

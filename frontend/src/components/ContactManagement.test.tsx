@@ -20,7 +20,11 @@ vi.mock('../api/client', async () => {
 const sampleContact = {
   id: 1,
   name: 'Alice Smith',
-  address: '1 Elm St',
+  addressLine1: '1 Elm St',
+  addressLine2: '',
+  city: 'Springfield',
+  state: 'IL',
+  zipCode: '62701',
   telephoneNumber: '555-0100',
   email: 'alice@example.com',
   createdAt: '',
@@ -58,7 +62,7 @@ describe('ContactManagement', () => {
     await waitFor(() => expect(contactsApi.list).toHaveBeenCalled());
 
     fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Alice Smith' } });
-    fireEvent.change(screen.getByLabelText('Address'), { target: { value: '1 Elm St' } });
+    fireEvent.change(screen.getByLabelText('Address Line 1'), { target: { value: '1 Elm St' } });
     fireEvent.change(screen.getByLabelText('Telephone Number'), { target: { value: '555-0100' } });
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'alice@example.com' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add Contact' }));
@@ -67,7 +71,16 @@ describe('ContactManagement', () => {
       expect(screen.getByRole('status')).toHaveTextContent('Contact added successfully.'),
     );
     expect(contactsApi.create).toHaveBeenCalledWith(
-      { name: 'Alice Smith', address: '1 Elm St', telephoneNumber: '555-0100', email: 'alice@example.com' },
+      {
+        name: 'Alice Smith',
+        addressLine1: '1 Elm St',
+        addressLine2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        telephoneNumber: '555-0100',
+        email: 'alice@example.com',
+      },
       'tok',
     );
   });
@@ -106,7 +119,16 @@ describe('ContactManagement', () => {
     );
     expect(contactsApi.update).toHaveBeenCalledWith(
       1,
-      { name: 'Alice Updated', address: '1 Elm St', telephoneNumber: '555-0100', email: 'alice@example.com' },
+      {
+        name: 'Alice Updated',
+        addressLine1: '1 Elm St',
+        addressLine2: '',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62701',
+        telephoneNumber: '555-0100',
+        email: 'alice@example.com',
+      },
       'tok',
     );
   });

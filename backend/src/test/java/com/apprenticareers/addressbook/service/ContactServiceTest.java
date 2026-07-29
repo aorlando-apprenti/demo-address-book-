@@ -39,7 +39,11 @@ class ContactServiceTest {
         existingContact.setId(100L);
         existingContact.setOwnerUserId(1L);
         existingContact.setName("Alice Smith");
-        existingContact.setAddress("1 Elm St");
+        existingContact.setAddressLine1("1 Elm St");
+        existingContact.setAddressLine2(null);
+        existingContact.setCity("Springfield");
+        existingContact.setState("IL");
+        existingContact.setZipCode("62701");
         existingContact.setTelephoneNumber("555-0100");
         existingContact.setEmail("alice@example.com");
         existingContact.setCreatedAt(LocalDateTime.now());
@@ -48,7 +52,7 @@ class ContactServiceTest {
 
     @Test
     void addContact_persistsContactScopedToOwner() {
-        ContactRequest request = new ContactRequest("Bob Jones", "2 Oak Ave", "555-0200", "bob@example.com");
+        ContactRequest request = new ContactRequest("Bob Jones", "2 Oak Ave", null, "Springfield", "IL", "62701", "555-0200", "bob@example.com");
         when(contactRepository.save(any(Contact.class))).thenAnswer(invocation -> {
             Contact c = invocation.getArgument(0);
             c.setId(101L);
@@ -79,20 +83,20 @@ class ContactServiceTest {
 
     @Test
     void updateContact_updatesFieldsWhenOwnedByCaller() {
-        ContactRequest request = new ContactRequest("Alice Updated", "9 New St", "555-9999", "alice.new@example.com");
+        ContactRequest request = new ContactRequest("Alice Updated", "9 New St", null, "Springfield", "IL", "62701", "555-9999", "alice.new@example.com");
         when(contactRepository.findByIdAndOwnerUserId(100L, 1L)).thenReturn(Optional.of(existingContact));
         when(contactRepository.save(any(Contact.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         ContactResponse response = contactService.updateContact(100L, 1L, request);
 
         assertThat(response.getName()).isEqualTo("Alice Updated");
-        assertThat(response.getAddress()).isEqualTo("9 New St");
+        assertThat(response.getAddressLine1()).isEqualTo("9 New St");
         verify(contactRepository).save(existingContact);
     }
 
     @Test
     void updateContact_throwsWhenContactNotOwnedByCaller() {
-        ContactRequest request = new ContactRequest("Hijacked", "x", "x", "x@example.com");
+        ContactRequest request = new ContactRequest("Hijacked", "x", "x", "x", "x", "x", "x", "x@example.com");
         when(contactRepository.findByIdAndOwnerUserId(100L, 2L)).thenReturn(Optional.empty());
 
         assertThrows(ContactNotFoundException.class, () -> contactService.updateContact(100L, 2L, request));

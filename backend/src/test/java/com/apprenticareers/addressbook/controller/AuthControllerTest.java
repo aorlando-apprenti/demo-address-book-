@@ -49,8 +49,8 @@ class AuthControllerTest {
 
     @Test
     void register_returns201WithCreatedUser() throws Exception {
-        RegisterRequest request = new RegisterRequest("new@example.com", "password1", "1 Elm St", "555-0300");
-        UserResponse response = new UserResponse(1L, "new@example.com", "1 Elm St", "555-0300",
+        RegisterRequest request = new RegisterRequest("new@example.com", "password1", "1 Elm St", null, "Springfield", "IL", "62701", "555-0300");
+        UserResponse response = new UserResponse(1L, "new@example.com", "1 Elm St", null, "Springfield", "IL", "62701", "555-0300",
                 User.Role.USER, LocalDateTime.now());
         when(authService.register(any(RegisterRequest.class))).thenReturn(response);
 
@@ -63,7 +63,7 @@ class AuthControllerTest {
 
     @Test
     void register_returns400ForInvalidPayload() throws Exception {
-        RegisterRequest invalid = new RegisterRequest("not-an-email", "", "", "");
+        RegisterRequest invalid = new RegisterRequest("not-an-email", "", "", null, "", "", "", "");
 
         mockMvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -73,7 +73,7 @@ class AuthControllerTest {
 
     @Test
     void register_returns409WhenEmailAlreadyExists() throws Exception {
-        RegisterRequest request = new RegisterRequest("dup@example.com", "password1", "1 Elm St", "555-0300");
+        RegisterRequest request = new RegisterRequest("dup@example.com", "password1", "1 Elm St", null, "Springfield", "IL", "62701", "555-0300");
         when(authService.register(any(RegisterRequest.class)))
                 .thenThrow(new EmailAlreadyExistsException("dup@example.com"));
 

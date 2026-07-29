@@ -65,17 +65,19 @@ Both `User.address` and `Contact.address` (previously a single free-text line) a
 | User | city | Required | City name |
 | User | state | Required | 2-letter USPS state abbreviation, per USPS Pub 28 §358 |
 | User | zipCode | Required | 5-digit ZIP Code, optionally extended to ZIP+4 format (`#####-####`) |
-| Contact | addressLine1 | Required, single line | Same definition as `User.addressLine1` |
+| Contact | addressLine1 | Optional, single line | Same definition as `User.addressLine1` — **optional**, not required, matching the existing (pre-CR-001) `Contact.address` field's optionality; a contact may have no address on file at all |
 | Contact | addressLine2 | Optional, single line | Same definition as `User.addressLine2` |
-| Contact | city | Required | Same definition as `User.city` |
-| Contact | state | Required | Same definition as `User.state` |
-| Contact | zipCode | Required | Same definition as `User.zipCode` |
+| Contact | city | Optional | Same definition as `User.city` |
+| Contact | state | Optional | Same definition as `User.state` |
+| Contact | zipCode | Optional | Same definition as `User.zipCode` |
+
+**Implementation note (discovered during CR-001 implementation):** `User.address` is populated from two request DTOs, not one — `RegisterRequest` (FR-01, self-registration) and `CreateUserRequest` (FR-04, Admin-created accounts) — both get the identical 5-field expansion. The initial Admin account seeded at startup (FR-02, `StartupAdminSeederService`) also sets `User.address` and is updated to seed the 5 fields instead of one placeholder string.
 
 ## 8. Non-Functional Requirements
 *   **Data Security & Compliance:** Passwords must be hashed at rest (no plaintext storage). No formal complexity policy is required. Authorization checks must ensure a user can only access their own contact records.
 *   **Performance & Scalability:** No formal SLA. Reasonable responsiveness is expected for a small test application.
 *   **Usability & Accessibility:** No formal accessibility standard required. A basic, usable UI is sufficient for this test application.
-*   **Data Validation & Standards:** `state` must validate against the USPS standard state abbreviation list (Pub 28 §358); `zipCode` must validate against the 5-digit or ZIP+4 format; `addressLine1`, `city`, and `state` are required on both `User` and `Contact`, `addressLine2` is optional on both.
+*   **Data Validation & Standards:** `state` must validate against the USPS standard state abbreviation list (Pub 28 §358) and `zipCode` against the 5-digit or ZIP+4 format, wherever either is supplied (both are optional on `Contact`). `addressLine1`, `city`, and `state` are required on `User` (both `RegisterRequest` and `CreateUserRequest`); all 5 fields are optional on `Contact`. `addressLine2` is optional everywhere.
 
 ## 9. Assumptions & Constraints
 *   **Technical / Resource Constraints:** Backend implemented in Java/Spring Boot; frontend implemented in Node/NPM, per the standing architecture-design and pipeline-deploy scaffolding conventions. No OAuth/SSO, multi-tenancy, import/export, or mobile requirements.

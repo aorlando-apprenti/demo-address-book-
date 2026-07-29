@@ -3,7 +3,11 @@ const BASE_URL = 'http://localhost:8080';
 export interface RegisterPayload {
   email: string;
   password: string;
-  address: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  zipCode: string;
   telephoneNumber: string;
 }
 
@@ -22,7 +26,11 @@ export interface AuthResponse {
 export interface UserResponse {
   id: number;
   email: string;
-  address: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  zipCode: string;
   telephoneNumber: string;
   role: string;
   createdAt: string;
@@ -35,7 +43,11 @@ export interface ChangePasswordPayload {
 
 export interface CreateUserPayload {
   email: string;
-  address: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  zipCode: string;
   telephoneNumber: string;
 }
 
@@ -56,7 +68,11 @@ export interface MessageResponse {
 
 export interface ContactPayload {
   name: string;
-  address: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
   telephoneNumber: string;
   email: string;
 }
@@ -64,7 +80,11 @@ export interface ContactPayload {
 export interface ContactResponse {
   id: number;
   name: string;
-  address: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
   telephoneNumber: string;
   email: string;
   createdAt: string;

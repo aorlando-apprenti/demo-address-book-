@@ -71,12 +71,12 @@ class ContactControllerTest {
     }
 
     private ContactRequest validRequest() {
-        return new ContactRequest("Bob Jones", "2 Oak Ave", "555-0200", "bob@example.com");
+        return new ContactRequest("Bob Jones", "2 Oak Ave", null, "Springfield", "IL", "62701", "555-0200", "bob@example.com");
     }
 
     private ContactResponse sampleResponse() {
-        return new ContactResponse(100L, "Bob Jones", "2 Oak Ave", "555-0200", "bob@example.com",
-                LocalDateTime.now(), LocalDateTime.now());
+        return new ContactResponse(100L, "Bob Jones", "2 Oak Ave", null, "Springfield", "IL", "62701", "555-0200",
+                "bob@example.com", LocalDateTime.now(), LocalDateTime.now());
     }
 
     @Test
@@ -103,7 +103,7 @@ class ContactControllerTest {
 
     @Test
     void addContact_returns400ForInvalidPayload() throws Exception {
-        ContactRequest invalid = new ContactRequest("", "", "", "not-an-email");
+        ContactRequest invalid = new ContactRequest("", "", null, "", "", "", "", "not-an-email");
 
         mockMvc.perform(post("/contacts")
                         .with(user(OWNER_ONE))

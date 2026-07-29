@@ -50,14 +50,18 @@ class AuthServiceTest {
         existingUser.setId(1L);
         existingUser.setEmail("user@example.com");
         existingUser.setPasswordHash("hashed-old-password");
-        existingUser.setAddress("123 Main St");
+        existingUser.setAddressLine1("123 Main St");
+        existingUser.setAddressLine2(null);
+        existingUser.setCity("Springfield");
+        existingUser.setState("IL");
+        existingUser.setZipCode("62701");
         existingUser.setTelephoneNumber("555-0100");
         existingUser.setRole(User.Role.USER);
     }
 
     @Test
     void register_persistsNewUserWithHashedPasswordAndUserRole() {
-        RegisterRequest request = new RegisterRequest("new@example.com", "plainPassword", "456 Oak St", "555-0200");
+        RegisterRequest request = new RegisterRequest("new@example.com", "plainPassword", "456 Oak St", null, "Springfield", "IL", "62701", "555-0200");
         when(userRepository.existsByEmail("new@example.com")).thenReturn(false);
         when(passwordEncoder.encode("plainPassword")).thenReturn("hashed-password");
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
@@ -80,7 +84,7 @@ class AuthServiceTest {
 
     @Test
     void register_throwsWhenEmailAlreadyExists() {
-        RegisterRequest request = new RegisterRequest("user@example.com", "plainPassword", "123 Main St", "555-0100");
+        RegisterRequest request = new RegisterRequest("user@example.com", "plainPassword", "123 Main St", null, "Springfield", "IL", "62701", "555-0100");
         when(userRepository.existsByEmail("user@example.com")).thenReturn(true);
 
         assertThrows(EmailAlreadyExistsException.class, () -> authService.register(request));

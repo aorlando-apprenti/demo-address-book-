@@ -8,7 +8,11 @@ export interface RegisterFormProps {
 export function RegisterForm({ onRegistered }: RegisterFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [address, setAddress] = useState('');
+  const [addressLine1, setAddressLine1] = useState('');
+  const [addressLine2, setAddressLine2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [telephoneNumber, setTelephoneNumber] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -20,7 +24,7 @@ export function RegisterForm({ onRegistered }: RegisterFormProps) {
     setSuccess(false);
     setSubmitting(true);
     try {
-      await authApi.register({ email, password, address, telephoneNumber });
+      await authApi.register({ email, password, addressLine1, addressLine2, city, state, zipCode, telephoneNumber });
       setSuccess(true);
       onRegistered?.();
     } catch (err) {
@@ -52,12 +56,50 @@ export function RegisterForm({ onRegistered }: RegisterFormProps) {
         required
       />
 
-      <label htmlFor="register-address">Address</label>
+      <label htmlFor="register-address-line1">Address Line 1</label>
       <input
-        id="register-address"
+        id="register-address-line1"
         type="text"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
+        value={addressLine1}
+        onChange={(e) => setAddressLine1(e.target.value)}
+        required
+      />
+
+      <label htmlFor="register-address-line2">Address Line 2</label>
+      <input
+        id="register-address-line2"
+        type="text"
+        value={addressLine2}
+        onChange={(e) => setAddressLine2(e.target.value)}
+      />
+
+      <label htmlFor="register-city">City</label>
+      <input
+        id="register-city"
+        type="text"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+        required
+      />
+
+      <label htmlFor="register-state">State</label>
+      <input
+        id="register-state"
+        type="text"
+        maxLength={2}
+        placeholder="e.g. CA"
+        value={state}
+        onChange={(e) => setState(e.target.value.toUpperCase())}
+        required
+      />
+
+      <label htmlFor="register-zip">ZIP Code</label>
+      <input
+        id="register-zip"
+        type="text"
+        placeholder="e.g. 94103 or 94103-1234"
+        value={zipCode}
+        onChange={(e) => setZipCode(e.target.value)}
         required
       />
 

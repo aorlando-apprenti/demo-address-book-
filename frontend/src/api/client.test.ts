@@ -32,7 +32,10 @@ describe('authApi', () => {
     const result = await authApi.register({
       email: 'a@b.com',
       password: 'pw',
-      address: 'addr',
+      addressLine1: 'addr',
+      city: 'Springfield',
+      state: 'IL',
+      zipCode: '62701',
       telephoneNumber: '123',
     });
 
@@ -67,7 +70,10 @@ describe('adminApi', () => {
   it('createUser posts payload with auth header', async () => {
     mockFetchOnce(201, { user: { id: 2, email: 'x@y.com' }, temporaryPassword: 'temp123' });
 
-    const result = await adminApi.createUser({ email: 'x@y.com', address: 'a', telephoneNumber: '1' }, 'tok');
+    const result = await adminApi.createUser(
+      { email: 'x@y.com', addressLine1: 'a', city: 'Springfield', state: 'IL', zipCode: '62701', telephoneNumber: '1' },
+      'tok',
+    );
 
     expect(result.temporaryPassword).toBe('temp123');
   });
@@ -93,7 +99,10 @@ describe('adminApi', () => {
     mockFetchOnce(400, { message: 'Validation failed', fieldErrors: { email: 'Email is required' } });
 
     await expect(
-      adminApi.createUser({ email: '', address: '', telephoneNumber: '' }, 'tok'),
+      adminApi.createUser(
+        { email: '', addressLine1: '', city: '', state: '', zipCode: '', telephoneNumber: '' },
+        'tok',
+      ),
     ).rejects.toMatchObject({ fieldErrors: { email: 'Email is required' } });
   });
 });
@@ -127,7 +136,7 @@ describe('contactsApi', () => {
     mockFetchOnce(201, { id: 3, name: 'Carol' });
 
     const result = await contactsApi.create(
-      { name: 'Carol', address: 'addr', telephoneNumber: '1', email: 'c@example.com' },
+      { name: 'Carol', addressLine1: 'addr', telephoneNumber: '1', email: 'c@example.com' },
       'tok',
     );
 
@@ -140,7 +149,7 @@ describe('contactsApi', () => {
 
     const result = await contactsApi.update(
       3,
-      { name: 'Carol Updated', address: 'addr', telephoneNumber: '1', email: 'c@example.com' },
+      { name: 'Carol Updated', addressLine1: 'addr', telephoneNumber: '1', email: 'c@example.com' },
       'tok',
     );
 

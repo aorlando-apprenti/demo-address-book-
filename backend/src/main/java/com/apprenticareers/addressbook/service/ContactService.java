@@ -30,7 +30,11 @@ public class ContactService {
         Contact contact = new Contact();
         contact.setOwnerUserId(ownerUserId);
         contact.setName(request.getName());
-        contact.setAddress(request.getAddress());
+        contact.setAddressLine1(request.getAddressLine1());
+        contact.setAddressLine2(request.getAddressLine2());
+        contact.setCity(request.getCity());
+        contact.setState(request.getState());
+        contact.setZipCode(request.getZipCode());
         contact.setTelephoneNumber(request.getTelephoneNumber());
         contact.setEmail(request.getEmail());
 
@@ -56,7 +60,11 @@ public class ContactService {
                 .orElseThrow(() -> new ContactNotFoundException(contactId));
 
         contact.setName(request.getName());
-        contact.setAddress(request.getAddress());
+        contact.setAddressLine1(request.getAddressLine1());
+        contact.setAddressLine2(request.getAddressLine2());
+        contact.setCity(request.getCity());
+        contact.setState(request.getState());
+        contact.setZipCode(request.getZipCode());
         contact.setTelephoneNumber(request.getTelephoneNumber());
         contact.setEmail(request.getEmail());
 
@@ -72,9 +80,10 @@ public class ContactService {
     }
 
     /**
-     * FR-10: search the authenticated user's own contacts across name,
-     * address, telephoneNumber, and email. A blank/absent term returns all
-     * of the user's contacts.
+     * FR-10: search the authenticated user's own contacts across name, the 5
+     * structured address fields (addressLine1, addressLine2, city, state,
+     * zipCode), telephoneNumber, and email (CR-001). A blank/absent term
+     * returns all of the user's contacts.
      */
     @Transactional(readOnly = true)
     public List<ContactResponse> searchContacts(Long ownerUserId, String term) {

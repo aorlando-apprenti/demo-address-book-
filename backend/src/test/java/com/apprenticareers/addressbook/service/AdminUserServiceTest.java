@@ -54,7 +54,7 @@ class AdminUserServiceTest {
 
     @Test
     void createUser_persistsUserWithGeneratedPasswordAndUserRole() {
-        CreateUserRequest request = new CreateUserRequest("new@example.com", "1 Elm St", "555-0300");
+        CreateUserRequest request = new CreateUserRequest("new@example.com", "1 Elm St", null, "Springfield", "IL", "62701", "555-0300");
         when(userRepository.existsByEmail("new@example.com")).thenReturn(false);
         when(passwordEncoder.encode(anyString())).thenReturn("hashed-temp-password");
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
@@ -77,7 +77,7 @@ class AdminUserServiceTest {
 
     @Test
     void createUser_throwsWhenEmailAlreadyExists() {
-        CreateUserRequest request = new CreateUserRequest("target@example.com", "1 Elm St", "555-0300");
+        CreateUserRequest request = new CreateUserRequest("target@example.com", "1 Elm St", null, "Springfield", "IL", "62701", "555-0300");
         when(userRepository.existsByEmail("target@example.com")).thenReturn(true);
 
         assertThrows(EmailAlreadyExistsException.class, () -> adminUserService.createUser(request));

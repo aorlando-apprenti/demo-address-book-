@@ -17,12 +17,16 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     Optional<Contact> findByIdAndOwnerUserId(Long id, Long ownerUserId);
 
     /**
-     * FR-10: multi-field search (name, address, telephoneNumber, email),
-     * always scoped to the owning user.
+     * FR-10: multi-field search (name, the 5 structured address fields,
+     * telephoneNumber, email), always scoped to the owning user (CR-001).
      */
     @Query("SELECT c FROM Contact c WHERE c.ownerUserId = :ownerUserId AND ("
             + "LOWER(c.name) LIKE LOWER(CONCAT('%', :term, '%')) OR "
-            + "LOWER(c.address) LIKE LOWER(CONCAT('%', :term, '%')) OR "
+            + "LOWER(c.addressLine1) LIKE LOWER(CONCAT('%', :term, '%')) OR "
+            + "LOWER(c.addressLine2) LIKE LOWER(CONCAT('%', :term, '%')) OR "
+            + "LOWER(c.city) LIKE LOWER(CONCAT('%', :term, '%')) OR "
+            + "LOWER(c.state) LIKE LOWER(CONCAT('%', :term, '%')) OR "
+            + "LOWER(c.zipCode) LIKE LOWER(CONCAT('%', :term, '%')) OR "
             + "LOWER(c.telephoneNumber) LIKE LOWER(CONCAT('%', :term, '%')) OR "
             + "LOWER(c.email) LIKE LOWER(CONCAT('%', :term, '%')))")
     List<Contact> searchByOwnerUserIdAndTerm(@Param("ownerUserId") Long ownerUserId, @Param("term") String term);

@@ -31,7 +31,11 @@ class StartupAdminSeederServiceTest {
     void setUp() {
         seederService = new StartupAdminSeederService(userRepository, passwordEncoder);
         ReflectionTestUtils.setField(seederService, "seedAdminEmail", "admin@addressbook.local");
-        ReflectionTestUtils.setField(seederService, "seedAdminAddress", "HQ");
+        ReflectionTestUtils.setField(seederService, "seedAdminAddressLine1", "HQ");
+        ReflectionTestUtils.setField(seederService, "seedAdminAddressLine2", "");
+        ReflectionTestUtils.setField(seederService, "seedAdminCity", "Headquarters");
+        ReflectionTestUtils.setField(seederService, "seedAdminState", "DC");
+        ReflectionTestUtils.setField(seederService, "seedAdminZipCode", "00000");
         ReflectionTestUtils.setField(seederService, "seedAdminTelephone", "000-000-0000");
     }
 

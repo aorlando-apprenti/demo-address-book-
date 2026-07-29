@@ -19,13 +19,26 @@ describe('AdminUserManagement', () => {
 
   it('creates a user and shows the generated temporary password', async () => {
     (adminApi.createUser as ReturnType<typeof vi.fn>).mockResolvedValue({
-      user: { id: 3, email: 'new@example.com', address: 'addr', telephoneNumber: '1', role: 'USER', createdAt: '' },
+      user: {
+        id: 3,
+        email: 'new@example.com',
+        addressLine1: 'addr',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62701',
+        telephoneNumber: '1',
+        role: 'USER',
+        createdAt: '',
+      },
       temporaryPassword: 'Temp123',
     });
 
     render(<AdminUserManagement token="tok" />);
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'new@example.com' } });
-    fireEvent.change(screen.getByLabelText('Address'), { target: { value: 'addr' } });
+    fireEvent.change(screen.getByLabelText('Address Line 1'), { target: { value: 'addr' } });
+    fireEvent.change(screen.getByLabelText('City'), { target: { value: 'Springfield' } });
+    fireEvent.change(screen.getByLabelText('State'), { target: { value: 'IL' } });
+    fireEvent.change(screen.getByLabelText('ZIP Code'), { target: { value: '62701' } });
     fireEvent.change(screen.getByLabelText('Telephone Number'), { target: { value: '1' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add User' }));
 
@@ -41,7 +54,10 @@ describe('AdminUserManagement', () => {
 
     render(<AdminUserManagement token="tok" />);
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'dup@example.com' } });
-    fireEvent.change(screen.getByLabelText('Address'), { target: { value: 'addr' } });
+    fireEvent.change(screen.getByLabelText('Address Line 1'), { target: { value: 'addr' } });
+    fireEvent.change(screen.getByLabelText('City'), { target: { value: 'Springfield' } });
+    fireEvent.change(screen.getByLabelText('State'), { target: { value: 'IL' } });
+    fireEvent.change(screen.getByLabelText('ZIP Code'), { target: { value: '62701' } });
     fireEvent.change(screen.getByLabelText('Telephone Number'), { target: { value: '1' } });
     fireEvent.click(screen.getByRole('button', { name: 'Add User' }));
 

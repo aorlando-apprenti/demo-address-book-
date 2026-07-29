@@ -5,7 +5,16 @@ export interface ContactManagementProps {
   token: string;
 }
 
-const EMPTY_FORM: ContactPayload = { name: '', address: '', telephoneNumber: '', email: '' };
+const EMPTY_FORM: ContactPayload = {
+  name: '',
+  addressLine1: '',
+  addressLine2: '',
+  city: '',
+  state: '',
+  zipCode: '',
+  telephoneNumber: '',
+  email: '',
+};
 
 export function ContactManagement({ token }: ContactManagementProps) {
   const [contacts, setContacts] = useState<ContactResponse[]>([]);
@@ -65,7 +74,11 @@ export function ContactManagement({ token }: ContactManagementProps) {
     setEditingId(contact.id);
     setForm({
       name: contact.name ?? '',
-      address: contact.address ?? '',
+      addressLine1: contact.addressLine1 ?? '',
+      addressLine2: contact.addressLine2 ?? '',
+      city: contact.city ?? '',
+      state: contact.state ?? '',
+      zipCode: contact.zipCode ?? '',
       telephoneNumber: contact.telephoneNumber ?? '',
       email: contact.email ?? '',
     });
@@ -115,8 +128,13 @@ export function ContactManagement({ token }: ContactManagementProps) {
       <ul aria-label="contact-list">
         {contacts.map((contact) => (
           <li key={contact.id}>
-            <span>{contact.name}</span> <span>{contact.address}</span> <span>{contact.telephoneNumber}</span>{' '}
-            <span>{contact.email}</span>
+            <span>{contact.name}</span>{' '}
+            <span>
+              {[contact.addressLine1, contact.addressLine2, contact.city, contact.state, contact.zipCode]
+                .filter(Boolean)
+                .join(', ')}
+            </span>{' '}
+            <span>{contact.telephoneNumber}</span> <span>{contact.email}</span>
             <button type="button" onClick={() => handleEditClick(contact)}>
               Edit
             </button>
@@ -139,12 +157,47 @@ export function ContactManagement({ token }: ContactManagementProps) {
           required
         />
 
-        <label htmlFor="contact-address">Address</label>
+        <label htmlFor="contact-address-line1">Address Line 1</label>
         <input
-          id="contact-address"
+          id="contact-address-line1"
           type="text"
-          value={form.address}
-          onChange={(e) => setForm({ ...form, address: e.target.value })}
+          value={form.addressLine1}
+          onChange={(e) => setForm({ ...form, addressLine1: e.target.value })}
+        />
+
+        <label htmlFor="contact-address-line2">Address Line 2</label>
+        <input
+          id="contact-address-line2"
+          type="text"
+          value={form.addressLine2}
+          onChange={(e) => setForm({ ...form, addressLine2: e.target.value })}
+        />
+
+        <label htmlFor="contact-city">City</label>
+        <input
+          id="contact-city"
+          type="text"
+          value={form.city}
+          onChange={(e) => setForm({ ...form, city: e.target.value })}
+        />
+
+        <label htmlFor="contact-state">State</label>
+        <input
+          id="contact-state"
+          type="text"
+          maxLength={2}
+          placeholder="e.g. CA"
+          value={form.state}
+          onChange={(e) => setForm({ ...form, state: e.target.value.toUpperCase() })}
+        />
+
+        <label htmlFor="contact-zip">ZIP Code</label>
+        <input
+          id="contact-zip"
+          type="text"
+          placeholder="e.g. 94103 or 94103-1234"
+          value={form.zipCode}
+          onChange={(e) => setForm({ ...form, zipCode: e.target.value })}
         />
 
         <label htmlFor="contact-phone">Telephone Number</label>

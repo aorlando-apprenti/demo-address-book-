@@ -14,7 +14,11 @@ public class UserResponse {
 
     private Long id;
     private String email;
-    private String address;
+    private String addressLine1;
+    private String addressLine2;
+    private String city;
+    private String state;
+    private String zipCode;
     private String telephoneNumber;
     private User.Role role;
     private LocalDateTime createdAt;
@@ -23,7 +27,11 @@ public class UserResponse {
         return new UserResponse(
                 user.getId(),
                 user.getEmail(),
-                user.getAddress(),
+                user.getAddressLine1(),
+                user.getAddressLine2(),
+                user.getCity(),
+                user.getState(),
+                user.getZipCode(),
                 user.getTelephoneNumber(),
                 user.getRole(),
                 user.getCreatedAt()

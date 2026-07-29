@@ -29,3 +29,10 @@ No other scope changes — this CR is limited to the address field structure/spe
 *   `ContactService` search (Section 4, FR-10) updated to filter across all 5 new address columns instead of one.
 *   Registration sequencing (Section 5) updated to reflect the expanded payload.
 *   DTOs (`dto` package, Section 6) will need the same field expansion when `@software-developer` implements this — not called out as a separate architectural decision since it's a direct, mechanical consequence of the entity change.
+
+### Implementation Discovery (`@software-developer`)
+Two additional call sites populate `User.address` that weren't enumerated above — both are direct, mechanical consequences of the entity change, not new scope:
+*   `CreateUserRequest` (FR-04, Admin-created accounts) — gets the same 5-field expansion as `RegisterRequest`.
+*   `StartupAdminSeederService` + `application.properties` (FR-02, seed Admin account) — the single `admin.seed.address=HQ` property is replaced with 5 seed properties.
+
+Also corrected during implementation: `Contact`'s address fields are **optional**, not required as originally drafted in Requirements.md §7 — the pre-existing `ContactRequest.address` had no `@NotBlank`, so this CR preserves that optionality rather than silently making address mandatory on contacts. `Requirements.md` §7 has been corrected in place (still v1.1 — this is a refinement before merge, not a new approved revision).

@@ -50,13 +50,13 @@ class AdminUserControllerTest {
     private CustomUserDetailsService customUserDetailsService;
 
     private CreateUserRequest validRequest() {
-        return new CreateUserRequest("new@example.com", "1 Elm St", "555-0300");
+        return new CreateUserRequest("new@example.com", "1 Elm St", null, "Springfield", "IL", "62701", "555-0300");
     }
 
     @Test
     @WithMockUser(roles = "ADMIN")
     void createUser_returns201ForAdmin() throws Exception {
-        UserResponse userResponse = new UserResponse(10L, "new@example.com", "1 Elm St", "555-0300",
+        UserResponse userResponse = new UserResponse(10L, "new@example.com", "1 Elm St", null, "Springfield", "IL", "62701", "555-0300",
                 User.Role.USER, LocalDateTime.now());
         when(adminUserService.createUser(any(CreateUserRequest.class)))
                 .thenReturn(new CreateUserResponse(userResponse, "TempPass123"));
@@ -89,7 +89,7 @@ class AdminUserControllerTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     void createUser_returns400ForInvalidPayload() throws Exception {
-        CreateUserRequest invalid = new CreateUserRequest("not-an-email", "", "");
+        CreateUserRequest invalid = new CreateUserRequest("not-an-email", "", null, "", "", "", "");
 
         mockMvc.perform(post("/admin/users")
                         .contentType(MediaType.APPLICATION_JSON)

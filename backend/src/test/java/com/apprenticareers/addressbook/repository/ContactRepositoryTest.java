@@ -20,7 +20,7 @@ class ContactRepositoryTest {
         Contact contact = new Contact();
         contact.setOwnerUserId(ownerUserId);
         contact.setName(name);
-        contact.setAddress(address);
+        contact.setAddressLine1(address);
         contact.setTelephoneNumber(phone);
         contact.setEmail(email);
         return contact;

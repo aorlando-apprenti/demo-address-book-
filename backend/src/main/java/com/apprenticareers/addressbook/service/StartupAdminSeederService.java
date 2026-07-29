@@ -21,8 +21,20 @@ public class StartupAdminSeederService implements CommandLineRunner {
     @Value("${admin.seed.email:admin@addressbook.local}")
     private String seedAdminEmail;
 
-    @Value("${admin.seed.address:HQ}")
-    private String seedAdminAddress;
+    @Value("${admin.seed.address-line1:HQ}")
+    private String seedAdminAddressLine1;
+
+    @Value("${admin.seed.address-line2:}")
+    private String seedAdminAddressLine2;
+
+    @Value("${admin.seed.city:Headquarters}")
+    private String seedAdminCity;
+
+    @Value("${admin.seed.state:DC}")
+    private String seedAdminState;
+
+    @Value("${admin.seed.zip-code:00000}")
+    private String seedAdminZipCode;
 
     @Value("${admin.seed.telephone:000-000-0000}")
     private String seedAdminTelephone;
@@ -44,7 +56,11 @@ public class StartupAdminSeederService implements CommandLineRunner {
         User admin = new User();
         admin.setEmail(seedAdminEmail);
         admin.setPasswordHash(passwordEncoder.encode(generatedPassword));
-        admin.setAddress(seedAdminAddress);
+        admin.setAddressLine1(seedAdminAddressLine1);
+        admin.setAddressLine2(seedAdminAddressLine2);
+        admin.setCity(seedAdminCity);
+        admin.setState(seedAdminState);
+        admin.setZipCode(seedAdminZipCode);
         admin.setTelephoneNumber(seedAdminTelephone);
         admin.setRole(User.Role.ADMIN);
 

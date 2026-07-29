@@ -7,7 +7,11 @@ export interface AdminUserManagementProps {
 
 export function AdminUserManagement({ token }: AdminUserManagementProps) {
   const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
+  const [addressLine1, setAddressLine1] = useState('');
+  const [addressLine2, setAddressLine2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [telephoneNumber, setTelephoneNumber] = useState('');
   const [createError, setCreateError] = useState<string | null>(null);
   const [createResult, setCreateResult] = useState<string | null>(null);
@@ -21,10 +25,17 @@ export function AdminUserManagement({ token }: AdminUserManagementProps) {
     setCreateError(null);
     setCreateResult(null);
     try {
-      const response = await adminApi.createUser({ email, address, telephoneNumber }, token);
+      const response = await adminApi.createUser(
+        { email, addressLine1, addressLine2, city, state, zipCode, telephoneNumber },
+        token,
+      );
       setCreateResult(`User ${response.user.email} created. Temporary password: ${response.temporaryPassword}`);
       setEmail('');
-      setAddress('');
+      setAddressLine1('');
+      setAddressLine2('');
+      setCity('');
+      setState('');
+      setZipCode('');
       setTelephoneNumber('');
     } catch (err) {
       setCreateError(err instanceof ApiRequestError ? err.message : 'Failed to create user');
@@ -69,12 +80,50 @@ export function AdminUserManagement({ token }: AdminUserManagementProps) {
           required
         />
 
-        <label htmlFor="admin-new-address">Address</label>
+        <label htmlFor="admin-new-address-line1">Address Line 1</label>
         <input
-          id="admin-new-address"
+          id="admin-new-address-line1"
           type="text"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={addressLine1}
+          onChange={(e) => setAddressLine1(e.target.value)}
+          required
+        />
+
+        <label htmlFor="admin-new-address-line2">Address Line 2</label>
+        <input
+          id="admin-new-address-line2"
+          type="text"
+          value={addressLine2}
+          onChange={(e) => setAddressLine2(e.target.value)}
+        />
+
+        <label htmlFor="admin-new-city">City</label>
+        <input
+          id="admin-new-city"
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          required
+        />
+
+        <label htmlFor="admin-new-state">State</label>
+        <input
+          id="admin-new-state"
+          type="text"
+          maxLength={2}
+          placeholder="e.g. CA"
+          value={state}
+          onChange={(e) => setState(e.target.value.toUpperCase())}
+          required
+        />
+
+        <label htmlFor="admin-new-zip">ZIP Code</label>
+        <input
+          id="admin-new-zip"
+          type="text"
+          placeholder="e.g. 94103 or 94103-1234"
+          value={zipCode}
+          onChange={(e) => setZipCode(e.target.value)}
           required
         />
 

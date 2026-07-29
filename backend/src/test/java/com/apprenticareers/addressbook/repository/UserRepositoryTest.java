@@ -19,7 +19,10 @@ class UserRepositoryTest {
         User user = new User();
         user.setEmail(email);
         user.setPasswordHash("hashed-password");
-        user.setAddress("123 Main St");
+        user.setAddressLine1("123 Main St");
+        user.setCity("Springfield");
+        user.setState("IL");
+        user.setZipCode("62701");
         user.setTelephoneNumber("555-0100");
         user.setRole(role);
         return user;
