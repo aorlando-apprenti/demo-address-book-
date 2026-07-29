@@ -12,8 +12,8 @@ Branch: `cr-001-address-specification`
 | CR1-TSK-4 | Update `AuthService`/`ContactService` to persist/return the new fields; update `ContactRepository` search query to match across all 5 address columns instead of one | FR-01, FR-07, FR-10 | CR1-TSK-3 | M | `@software-developer` | Complete | #4 |
 | CR1-TSK-5 | Update `AuthController`/`ContactController` request handling + `@WebMvcTest` suites for the new fields | FR-01, FR-07 | CR1-TSK-4 | S | `@software-developer` | Complete | #5 |
 | CR1-TSK-6 | Frontend: replace the single address input with the 5 structured fields on registration and contact add/edit/search forms + JS unit tests | FR-01, FR-07, FR-10 | CR1-TSK-5 | M | `@software-developer` | Complete | #6 |
-| CR1-TSK-7 | Code review of the full CR-001 slice (schema delta correctness, validation rules, search query correctness, test coverage) | All CR-001 tasks | CR1-TSK-6 | S | `@code-reviewer` | WIP | #7 |
-| CR1-TSK-8 | Merge `cr-001-address-specification` → `main`, regression suite, deploy to Test Environment | Pipeline Workflow B | CR1-TSK-7 Approved | S | `@dev-ops` | Planned | #8 |
+| CR1-TSK-7 | Code review of the full CR-001 slice (schema delta correctness, validation rules, search query correctness, test coverage) | All CR-001 tasks | CR1-TSK-6 | S | `@code-reviewer` | Complete | #7 |
+| CR1-TSK-8 | Merge `cr-001-address-specification` → `main`, regression suite, deploy to Test Environment | Pipeline Workflow B | CR1-TSK-7 Approved | S | `@dev-ops` | WIP | #8 |
 | CR1-TSK-9 | E2E test: registration and contact add/edit/search with structured address, including USPS state-abbreviation and ZIP/ZIP+4 validation edge cases | FR-01, FR-07, FR-10 | CR1-TSK-8 | M | `@qa-tester` | Planned | #9 |
 | CR1-TSK-10 | Production build & release — CR-001 | Pipeline Workflow C | CR1-TSK-9 PASSED | S | `@dev-ops` | Planned | #10 |
 
